@@ -24,7 +24,7 @@ class NetworkDataExtract:
         except Exception as e:
             raise CustomException(e, sys)
 
-    def cv_to_json_converter(self, file_path):
+    def csv_to_json_converter(self, file_path):
         try:
             data = pd.read_csv(file_path)
             data.reset_index(drop=True, inplace=True)
