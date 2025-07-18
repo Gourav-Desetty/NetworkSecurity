@@ -3,7 +3,8 @@ import sys
 from networksecurity.components.data_ingestion import DataIngestion
 from networksecurity.exception.exception import CustomException
 from networksecurity.logging.logger import logging
-from networksecurity.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig
+from networksecurity.entity.config_entity import DataIngestionConfig, TrainingPipelineConfig, DataValidationConfig
+from networksecurity.components.data_validation import DataValidation
 
 if __name__ == "__main__":
     try:
@@ -12,7 +13,13 @@ if __name__ == "__main__":
         dataingestion = DataIngestion(dataingestionconfig)
         logging.info("initiate data ingestion")
         dataingestionartifact = dataingestion.initiate_data_ingestion()
+        logging.info("data initiation completed")
         print(dataingestionartifact)
-
+        data_validation_config = DataValidationConfig(trainingpipelineconfig)
+        data_validation = DataValidation(dataingestionartifact, data_validation_config)
+        logging.info("initiate the data validation")
+        data_validation_artifact = data_validation.initiate_data_validation()
+        logging.info("Data Validation Completed")
+        print(data_validation_artifact)
     except Exception as e:
         raise CustomException(e, sys)

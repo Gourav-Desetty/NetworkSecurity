@@ -4,4 +4,6 @@ numpy
 pymongo==4.13.2
 certifi
 scikit-learn
+pyyaml
+dill
 #-e .
