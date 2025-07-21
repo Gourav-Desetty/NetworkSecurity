@@ -56,7 +56,7 @@ if __name__ == "__main__":
     DATABASE = "Gourav"
     COLLECTION = "NetworkData"
     network_obj = NetworkDataExtract()
-    records = network_obj.cv_to_json_converter(FILE_PATH)
+    records = network_obj.csv_to_json_converter(FILE_PATH)
     print(records)
     no_of_records = network_obj.insert_data_mongodb(records, DATABASE, COLLECTION)
     print(no_of_records)
