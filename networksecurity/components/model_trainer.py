@@ -24,6 +24,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.tree import DecisionTreeClassifier
 import mlflow
 
+import dagshub
+dagshub.init(repo_owner='Gourav-Desetty', repo_name='NetworkSecurity', mlflow=True)
+
 
 class ModelTrainer:
     def __init__(self,  model_trainer_config: ModelTrainerConfig, data_transformation_artifact: DataTranformationArtifact):
@@ -94,7 +97,7 @@ class ModelTrainer:
 
         y_test_pred = best_model.predict(x_test)
         classification_test_metric = get_classification_score(y_true=y_test, y_pred=y_test_pred)
-        self.track_mlflow(best_model, classification_train_metric)  ## Track the experiments with MLFlow
+        self.track_mlflow(best_model, classification_test_metric)  ## Track the experiments with MLFlow
 
         preprocessor = load_obj(file_path=self.data_transformation_artifact.transformed_object_file_path)
 
@@ -103,6 +106,9 @@ class ModelTrainer:
 
         Network_Model = NetworkModel(preprocessor=preprocessor, model = best_model)
         save_obj(self.model_trainer_config.trained_model_file_path, obj=Network_Model)
+
+        save_obj("final_model/model.pkl", best_model)
+
 
         ##Model trainer artifact
         model_trainer_artifact = ModelTrainerArtifact(trained_model_file_path=self.model_trainer_config.trained_model_file_path,

@@ -7,4 +7,9 @@ scikit-learn
 pyyaml
 dill
 mlflow
+mlflow<3
+dagshub
+fastapi
+uvicorn
+python-multipart
 #-e .
